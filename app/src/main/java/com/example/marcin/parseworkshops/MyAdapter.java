@@ -6,7 +6,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Marcin on 19.01.2016.
@@ -24,17 +30,58 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.Holder> {
     }
 
     @Override
-    public void onBindViewHolder(final Holder holder, int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         final Joke joke = items.get(position);
 
-        holder.score.setText("" + joke.getScore());
+        holder.plus.setEnabled(false);
+        ParseQuery<Vote> query = ParseQuery.getQuery(Vote.class);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.whereEqualTo("joke", joke);
+        query.findInBackground(new FindCallback<Vote>() {
+            @Override
+            public void done(List<Vote> objects, ParseException e) {
+                if (e != null)
+                    return;
+                if (objects != null && !objects.isEmpty()) {
+                    holder.plus.setEnabled(false);
+                } else {
+                    holder.plus.setEnabled(true);
+                }
+            }
+        });
+        ParseQuery<Vote> query2 = ParseQuery.getQuery(Vote.class);
+        query2.whereEqualTo("joke", joke);
+        query2.findInBackground(new FindCallback<Vote>() {
+            @Override
+            public void done(List<Vote> objects, ParseException e) {
+                if (e != null || objects == null)
+                    return;
+                holder.score.setText("" + objects.size());
+            }
+        });
+
         holder.joke.setText(joke.getJoke());
+        if (joke.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            holder.remove.setVisibility(View.VISIBLE);
+        } else {
+            holder.remove.setVisibility(View.GONE);
+        }
+        holder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                items.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                joke.incrementScore();
-                holder.score.setText("" + joke.getScore());
-                joke.saveInBackground();
+                Vote vote = new Vote();
+                vote.setJoke(joke);
+                vote.setUser(ParseUser.getCurrentUser());
+                holder.score.setText("" + (Integer.parseInt(holder.score.getText().toString()) + 1));
+                vote.saveInBackground();
+                holder.plus.setEnabled(false);
             }
         });
     }
@@ -46,7 +93,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.Holder> {
 
     class Holder extends RecyclerView.ViewHolder {
         public TextView score, joke;
-        public Button plus;
+        public Button plus, remove;
 
         public Holder(View itemView) {
             super(itemView);
@@ -54,6 +101,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.Holder> {
             score = (TextView) itemView.findViewById(R.id.score);
             joke = (TextView) itemView.findViewById(R.id.joke);
             plus = (Button) itemView.findViewById(R.id.plus);
+            remove = (Button) itemView.findViewById(R.id.remove);
         }
     }
 }

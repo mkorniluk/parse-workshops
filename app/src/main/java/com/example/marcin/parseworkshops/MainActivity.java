@@ -3,6 +3,7 @@ package com.example.marcin.parseworkshops;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,12 +21,14 @@ import java.util.List;
 public class MainActivity extends Activity {
     private ArrayList<Joke> items = new ArrayList<>();
     private MyAdapter adapter;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new MyAdapter(items);
@@ -37,12 +40,16 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, AddJokeActivity.class));
             }
         });
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        items.clear();
+    private void loadData() {
         ParseQuery<Joke> query = ParseQuery.getQuery(Joke.class);
         query.findInBackground(new FindCallback<Joke>() {
             @Override
@@ -50,9 +57,18 @@ public class MainActivity extends Activity {
                 if (e != null)
                     return;
 
+                items.clear();
                 items.addAll(objects);
                 adapter.notifyDataSetChanged();
+                swipeRefresh.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        swipeRefresh.setRefreshing(true);
+        loadData();
     }
 }

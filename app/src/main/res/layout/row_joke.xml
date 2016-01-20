@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-
     <TextView
-        android:layout_toLeftOf="@+id/score"
         android:id="@+id/joke"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/score"
+        android:padding="16dp" />
 
     <TextView
-        android:layout_toLeftOf="@+id/plus"
         android:id="@+id/score"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/plus"
+        android:padding="16dp"
+        android:textSize="20sp" />
 
     <Button
-        android:layout_alignParentRight="true"
         android:id="@+id/plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:text="+" />
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/plus"
+        android:text="remove" />
 </RelativeLayout>

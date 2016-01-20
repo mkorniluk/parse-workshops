@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         ParseACL.setDefaultACL(defaultACL, true);
 
         ParseObject.registerSubclass(Joke.class);
+        ParseObject.registerSubclass(Vote.class);
 
         final EditText email = (EditText) findViewById(R.id.email);
         final EditText password = (EditText) findViewById(R.id.password);

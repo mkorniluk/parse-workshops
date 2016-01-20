@@ -24,12 +24,4 @@ public class Joke extends ParseObject {
     public ParseUser getUser() {
         return getParseUser("user");
     }
-
-    public void incrementScore() {
-        increment("score");
-    }
-
-    public int getScore() {
-        return getInt("score");
-    }
 }
