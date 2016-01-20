@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".AddJokeActivity" />
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"
