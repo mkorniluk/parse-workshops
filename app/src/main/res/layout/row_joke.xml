@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/carbon_toolbarItemPadding">
 
-    <TextView
+    <carbon.widget.TextView
         android:id="@+id/joke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/score"
         android:padding="16dp" />
 
-    <TextView
+    <carbon.widget.TextView
         android:id="@+id/score"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:layout_toLeftOf="@+id/plus"
+        android:gravity="center"
         android:padding="16dp"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
-    <Button
+    <carbon.widget.ImageView
         android:id="@+id/plus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/carbon_ImageView.Icon.Inverse"
+        android:layout_width="@dimen/carbon_toolbarItemSize"
+        android:layout_height="@dimen/carbon_toolbarItemSize"
         android:layout_alignParentRight="true"
-        android:text="+" />
+        app:carbon_src="@raw/ic_thumb_up_black_24px" />
 
-    <Button
+    <carbon.widget.ImageView
         android:id="@+id/remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/carbon_ImageView.Icon.Inverse"
+        android:layout_width="@dimen/carbon_toolbarItemSize"
+        android:layout_height="@dimen/carbon_toolbarItemSize"
         android:layout_alignParentRight="true"
         android:layout_below="@id/plus"
-        android:text="remove" />
-</RelativeLayout>
+        app:carbon_src="@raw/ic_delete_black_24px" />
+</carbon.widget.RelativeLayout>

@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add" />
+    <carbon.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:text="Parse jokes">
+
+        <carbon.widget.ImageView
+            android:id="@+id/add"
+            app:carbon_src="@raw/ic_add_black_24px"
+            style="@style/carbon_ImageView.Icon"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize" />
+    </carbon.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <carbon.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+</carbon.widget.LinearLayout>

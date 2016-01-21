@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <EditText
+    <carbon.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:text="Add joke">
+
+        <carbon.widget.ImageView
+            android:id="@+id/add"
+            style="@style/carbon_ImageView.Icon"
+            app:carbon_src="@raw/ic_add_black_24px"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize" />
+    </carbon.widget.Toolbar>
+
+    <carbon.widget.EditText
+        android:layout_margin="@dimen/carbon_margin"
         android:id="@+id/joke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="joke" />
 
-    <Button
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add" />
-</LinearLayout>
+</carbon.widget.LinearLayout>
